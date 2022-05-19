@@ -166,7 +166,7 @@ multiple_workout_schema = WorkoutSchema(many=True)
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'username', 'password', 'workout', 'arm_workout')
+        fields = ('id', 'username', 'password', 'workout')
     workout = ma.Nested(multiple_workout_schema)
 
 user_schema = UserSchema()
@@ -267,7 +267,6 @@ def add_workout():
 def get_workouts():
     all_workouts = db.session.query(Workout).all()
 
-    return_data = generate_return_Data(workout_schema.dump(all_workouts))
     return jsonify(multiple_workout_schema.dump(all_workouts))
 
 @app.route('/workout/delete/<id>', methods=["DELETE"])
